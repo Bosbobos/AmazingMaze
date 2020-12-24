@@ -9,6 +9,9 @@ int[,] mas = new int[worldSize, worldSize]  // Инициализируем дв
         { 0, 1, 2, 3, 4 }
 };
 
+int rows = mas.GetUpperBound(0) + 1;// Количество строк
+int columns = mas.Length / rows;
+
 string world = @$"
 ████████████████████
 ███████        █████
@@ -22,12 +25,9 @@ string world = @$"
 ████████████████████
 ";
 Console.WriteLine(world);
-int rows = mas.GetUpperBound(0) + 1;//
-int columns = mas.Length / rows;
-
-WorldObjects[,] ConvertToWorld(string template)
+WorldObjects[,] ConvertToWorld(string template)// Метод, принимабщий строку и выводящий массив enum'ов WorldObjexts
 {
-    string[] words = template.Split(Environment.NewLine);
+    string[] words = template.Split(Environment.NewLine);// Разбивает нашу строку, каждая строчка - новый массив, В итоге получается двумерный массив
 
 }
 
