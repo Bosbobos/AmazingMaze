@@ -27,8 +27,7 @@ int worldSize = world.GetLength(0); // получаем размерность �
 
 void renderView()
 {
-    Console.CursorVisible = false; // убираем курсор
-    Console.SetCursorPosition(0, 0); // устанавливаем позицию, чтобы переписывать с самого начала
+    ConsoleProperties.Apply();
 
     string pointsView = $"Очки: {points}" + Environment.NewLine;
     Console.WriteLine(pointsView);
