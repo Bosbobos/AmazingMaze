@@ -27,6 +27,8 @@ int points = 0; // переменная, в которой лежат очки �
 
 void renderView()
 {
+    Console.Clear();
+
     string pointsView = $"Очки: {points}" + Environment.NewLine;
     Console.WriteLine(pointsView);
 
@@ -144,11 +146,12 @@ void gameLogic(ConsoleKey key)
 
 renderView();
 
-// функция перехвата нажатия клавиш
-var key = Console.ReadKey();
+while(true)
+{
+    var key = Console.ReadKey();
+    gameLogic(key.Key);
+    renderView();
+}
 
-gameLogic(key.Key);
-
-renderView();
 
 #endregion Стартуем
