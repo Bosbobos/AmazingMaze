@@ -12,13 +12,13 @@ using System;
 
 #region Инициализация мира
 
-const int worldSize = 4;
-WorldObjects[,] world = new WorldObjects[worldSize, worldSize]; // переменная, в которой лежит мир
-world[1, 1] = WorldObjects.Character;
-world[2, 1] = WorldObjects.EmptySpace;
-world[2, 2] = WorldObjects.EmptySpace;
 
 int points = 0; // переменная, в которой лежат очки персонажа
+
+WorldObjects[,] world = MapHolder.GetMap();
+
+int worldSize = world.GetLength(0); // получаем размерность многомерного массива по первому измерению
+
 
 #endregion Инициализация мира
 
@@ -27,7 +27,8 @@ int points = 0; // переменная, в которой лежат очки �
 
 void renderView()
 {
-    Console.Clear();
+    Console.CursorVisible = false; // убираем курсор
+    Console.SetCursorPosition(0, 0); // устанавливаем позицию, чтобы переписывать с самого начала
 
     string pointsView = $"Очки: {points}" + Environment.NewLine;
     Console.WriteLine(pointsView);
@@ -45,7 +46,7 @@ string worldToString(WorldObjects[,] worldObjects)
     {
         for (int i = 0; i < worldSize; i++)
         {
-            result += worldObjectToString(worldObjects[i, j]);
+            result += worldObjectToString(worldObjects[j, i]);
         }
         result += Environment.NewLine;
     }
@@ -103,10 +104,10 @@ Coordinates getDestinationPos(ConsoleKey key, Coordinates basePos)
     int speed = 1;
     switch (key)
     {
-        case ConsoleKey.RightArrow: return new Coordinates() { x = basePos.x + speed, y = basePos.y };
-        case ConsoleKey.LeftArrow: return new Coordinates() { x = basePos.x - speed, y = basePos.y };
-        case ConsoleKey.UpArrow: return new Coordinates() { x = basePos.x, y = basePos.y + speed };
-        case ConsoleKey.DownArrow:  return new Coordinates() { x = basePos.x, y = basePos.y - speed };
+        case ConsoleKey.RightArrow: return new Coordinates() { x = basePos.x , y = basePos.y + speed };
+        case ConsoleKey.LeftArrow: return new Coordinates() { x = basePos.x, y = basePos.y - speed };
+        case ConsoleKey.UpArrow: return new Coordinates() { x = basePos.x - speed, y = basePos.y };
+        case ConsoleKey.DownArrow:  return new Coordinates() { x = basePos.x + speed, y = basePos.y };
         default: throw new ArgumentException("Можно нажимать только на стрелочки!");
     }
 }

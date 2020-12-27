@@ -1,4 +1,4 @@
-﻿enum WorldObjects
+﻿public enum WorldObjects
 {
     Wall,
     EmptySpace,
