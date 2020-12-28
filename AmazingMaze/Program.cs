@@ -27,15 +27,12 @@ int worldSize = world.GetLength(0); // получаем размерность �
 
 void renderView()
 {
-    Console.CursorVisible = false; // убираем курсор
-    Console.SetCursorPosition(0, 0); // устанавливаем позицию, чтобы переписывать с самого начала
-
+    ConsoleProperties.ApplyWorldRenderProperties(worldSize);
     string pointsView = $"Очки: {points}" + Environment.NewLine;
     Console.WriteLine(pointsView);
-
+    
     string worldView = worldToString(world);
     Console.WriteLine(worldView);
-
 }
 
 string worldToString(WorldObjects[,] worldObjects)
@@ -144,6 +141,7 @@ void gameLogic(ConsoleKey key)
 
 
 #region Стартуем
+
 
 renderView();
 
