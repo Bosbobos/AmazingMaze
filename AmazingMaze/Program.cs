@@ -1,13 +1,4 @@
-﻿/*
- * спрайты: █ ▓ 00
- * 
- * задачи:
- *    красивый редактор уровней
- *    красивенькие спрайтики
-*/
-
-
-using System;
+﻿using System;
 
 
 #region Инициализация мира
@@ -25,6 +16,7 @@ int worldSize = world.GetLength(0); // получаем размерность �
 
 #region Функция отрисовки мира
 
+
 void renderView()
 {
     ConsoleProperties.ApplyWorldRenderProperties(worldSize);
@@ -34,6 +26,7 @@ void renderView()
     string worldView = worldToString(world);
     Console.WriteLine(worldView);
 }
+
 
 string worldToString(WorldObjects[,] worldObjects)
 {
@@ -50,6 +43,7 @@ string worldToString(WorldObjects[,] worldObjects)
 
     return result;
 }
+
 
 string worldObjectToString(WorldObjects worldObjects)
 {
@@ -68,12 +62,12 @@ string worldObjectToString(WorldObjects worldObjects)
     }
 }
 
+
 #endregion Функция отрисовки мира
 
 
 #region Функция логики игры
 
-//      проверка столкновения с бонусом
 
 Coordinates getPosOf(WorldObjects obj) // Возвращает позицию первого такого объекта на карте
 {
@@ -91,10 +85,12 @@ Coordinates getPosOf(WorldObjects obj) // Возвращает позицию п
     throw new Exception($"Объекта {obj} на карте нет!");
 }
 
+
 WorldObjects getObjectByCoordinates(Coordinates coord)
 {
     return world[coord.x, coord.y];
 }
+
 
 Coordinates getDestinationPos(ConsoleKey key, Coordinates basePos)
 {
@@ -109,17 +105,20 @@ Coordinates getDestinationPos(ConsoleKey key, Coordinates basePos)
     }
 }
 
+
 void move(WorldObjects mover ,Coordinates basePos, Coordinates destinationPos)
 {
     world[destinationPos.x, destinationPos.y] = mover; // На месте назначения появляется персонаж
     world[basePos.x, basePos.y] = WorldObjects.EmptySpace; // На месте назначения появляется пустота
 }
 
+
 void gameLogic(ConsoleKey key)
 {
     var characterPos = getPosOf(WorldObjects.Character);
     var destinationPos = getDestinationPos(key, characterPos);
     var bumpObject = getObjectByCoordinates(destinationPos);
+
     // Проверяем столкновение
     switch (bumpObject)
     {
@@ -137,11 +136,11 @@ void gameLogic(ConsoleKey key)
     }           
 }
 
+
 #endregion Функция логики игры
 
 
 #region Стартуем
-
 
 renderView();
 
@@ -151,6 +150,5 @@ while(true)
     gameLogic(key.Key);
     renderView();
 }
-
 
 #endregion Стартуем

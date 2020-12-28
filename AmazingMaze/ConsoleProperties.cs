@@ -44,6 +44,7 @@ public static class ConsoleProperties
         public string FontName;
     }
 
+
     private static FontInfo[] SetCurrentFont(short fontSize = 0)
     {
         FontInfo before = new FontInfo
@@ -53,7 +54,6 @@ public static class ConsoleProperties
 
         if (GetCurrentConsoleFontEx(ConsoleOutputHandle, false, ref before))
         {
-
             FontInfo set = new FontInfo
             {
                 cbSize = Marshal.SizeOf<FontInfo>(),
