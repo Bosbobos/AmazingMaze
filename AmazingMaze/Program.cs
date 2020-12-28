@@ -22,9 +22,30 @@ void renderView()
     ConsoleProperties.ApplyWorldRenderProperties(worldSize);
     string pointsView = $"Очки: {points}" + Environment.NewLine;
     Console.WriteLine(pointsView);
-    
+
+    renderWorld();
+}
+
+
+void renderWorld()
+{
     string worldView = worldToString(world);
-    Console.WriteLine(worldView);
+    //    Console.WriteLine(worldView);
+
+    for (int i = 0; i < worldView.Length; i++)
+    {
+        switch (worldView[i])
+        {
+            default:
+                var c = worldView[i];
+                Console.ForegroundColor = ConsoleColor.White;  // сбрасываем цвет
+                break;
+            case '▓':
+                Console.ForegroundColor = ConsoleColor.Blue;
+                break;
+        }
+        Console.Write(worldView[i]);
+    }
 }
 
 
@@ -56,7 +77,7 @@ string worldObjectToString(WorldObjects worldObjects)
         case WorldObjects.Character:
             return "▓▓";
         case WorldObjects.Crystall:
-            return "00";
+            return "++";
         default:
             throw new NotImplementedException("Add new case to the switch");
     }
@@ -97,16 +118,16 @@ Coordinates getDestinationPos(ConsoleKey key, Coordinates basePos)
     int speed = 1;
     switch (key)
     {
-        case ConsoleKey.RightArrow: return new Coordinates() { x = basePos.x , y = basePos.y + speed };
+        case ConsoleKey.RightArrow: return new Coordinates() { x = basePos.x, y = basePos.y + speed };
         case ConsoleKey.LeftArrow: return new Coordinates() { x = basePos.x, y = basePos.y - speed };
         case ConsoleKey.UpArrow: return new Coordinates() { x = basePos.x - speed, y = basePos.y };
-        case ConsoleKey.DownArrow:  return new Coordinates() { x = basePos.x + speed, y = basePos.y };
+        case ConsoleKey.DownArrow: return new Coordinates() { x = basePos.x + speed, y = basePos.y };
         default: throw new ArgumentException("Можно нажимать только на стрелочки!");
     }
 }
 
 
-void move(WorldObjects mover ,Coordinates basePos, Coordinates destinationPos)
+void move(WorldObjects mover, Coordinates basePos, Coordinates destinationPos)
 {
     world[destinationPos.x, destinationPos.y] = mover; // На месте назначения появляется персонаж
     world[basePos.x, basePos.y] = WorldObjects.EmptySpace; // На месте назначения появляется пустота
@@ -133,7 +154,7 @@ void gameLogic(ConsoleKey key)
             break;
         default:
             throw new NotImplementedException("Допишите switch!");
-    }           
+    }
 }
 
 
@@ -144,7 +165,7 @@ void gameLogic(ConsoleKey key)
 
 renderView();
 
-while(true)
+while (true)
 {
     var key = Console.ReadKey();
     gameLogic(key.Key);
