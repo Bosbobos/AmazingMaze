@@ -24,7 +24,7 @@ public static class ConsoleProperties
     {
         SetCurrentFont(10);
 
-        Console.SetWindowSize(worldSize * 2, // магическое число 2 - ширина одного спрайта в символах
+        Console.SetWindowSize(worldSize * 2 + 2, // магическое число 2 - ширина одного спрайта в символах
                               worldSize + 5); // магическое число 5 - дополнительные строчки помимо игрового поля т.к. надо также вместить очки на экран
         Console.CursorVisible = false; // убираем курсор
         Console.SetCursorPosition(0, 0); // устанавливаем позицию, чтобы переписывать с самого начала
