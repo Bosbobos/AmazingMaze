@@ -115,6 +115,9 @@ void move(WorldObjects mover ,Coordinates basePos, Coordinates destinationPos)
 
 void gameLogic(ConsoleKey key)
 {
+    if (!consoleKeyValidate(key))
+        return;
+
     var characterPos = getPosOf(WorldObjects.Character);
     var destinationPos = getDestinationPos(key, characterPos);
     var bumpObject = getObjectByCoordinates(destinationPos);
@@ -134,6 +137,15 @@ void gameLogic(ConsoleKey key)
         default:
             throw new NotImplementedException("Допишите switch!");
     }           
+}
+
+
+bool consoleKeyValidate(ConsoleKey key)
+{
+    if(key != ConsoleKey.RightArrow && key != ConsoleKey.LeftArrow && key != ConsoleKey.UpArrow && key != ConsoleKey.DownArrow)
+        return false;
+
+    return true;
 }
 
 
