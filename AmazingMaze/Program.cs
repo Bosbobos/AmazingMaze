@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 
 #region Инициализация мира
@@ -26,6 +27,19 @@ void renderView()
     
     string worldView = worldToString(world);
     Console.WriteLine(worldView);
+
+    recolorCharacter();
+}
+
+
+void recolorCharacter()
+{
+    var characterPos = getPosOf(WorldObjects.Character);
+    Console.SetCursorPosition(characterPos.y * 2, characterPos.x + 2);
+    Console.BackgroundColor = ConsoleColor.Cyan;
+    Console.Write(worldObjectToString(WorldObjects.Character));
+
+    Console.BackgroundColor = ConsoleColor.Black;
 }
 
 
@@ -55,7 +69,7 @@ string worldObjectToString(WorldObjects worldObjects)
         case WorldObjects.EmptySpace:
             return "  ";
         case WorldObjects.Character:
-            return "▓▓";
+            return "@@";
         case WorldObjects.Crystall:
             return "00";
         default:
