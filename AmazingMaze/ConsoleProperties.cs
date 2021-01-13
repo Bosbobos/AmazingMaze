@@ -22,10 +22,20 @@ public static class ConsoleProperties
 
     public static void ApplyWorldRenderProperties(int worldSize)
     {
-        SetCurrentFont(10);
+        var neededWidth = worldSize * 2 + 2;
+        var neededHeight = worldSize + 5;
 
-        Console.SetWindowSize(worldSize * 2 + 2, // магическое число 2 - ширина одного спрайта в символах
-                              worldSize + 5); // магическое число 5 - дополнительные строчки помимо игрового поля т.к. надо также вместить очки на экран
+        for (short fontSize = 50; fontSize >= 0; fontSize--)
+        {
+            SetCurrentFont(fontSize);
+            if (Console.LargestWindowWidth >= neededWidth && Console.LargestWindowHeight >= neededHeight) // меняем размер экрана, получаем новый максимальный размер экрана и сравниваем его с необходимым
+            {
+                break;
+            }
+        }
+
+        Console.SetWindowSize(neededWidth, // магическое число 2 - ширина одного спрайта в символах
+                              neededHeight); // магическое число 5 - дополнительные строчки помимо игрового поля т.к. надо также вместить очки на экран
         Console.CursorVisible = false; // убираем курсор
         Console.SetCursorPosition(0, 0); // устанавливаем позицию, чтобы переписывать с самого начала
     }
