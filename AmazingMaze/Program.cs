@@ -19,7 +19,8 @@ int worldSize = world.GetLength(0); // получаем размерность �
 
 void renderView()
 {
-    ConsoleProperties.ApplyWorldRenderProperties(worldSize);
+    ConsoleProperties.ApplyWorldRenderProperties();
+
     string pointsView = $"Очки: {points}" + Environment.NewLine;
     Console.WriteLine(pointsView);
     
@@ -154,6 +155,8 @@ bool consoleKeyValidate(ConsoleKey key)
 
 #region Стартуем
 
+
+ConsoleProperties.ApplyWindowSizeProperties(worldSize);
 renderView();
 
 while(true)

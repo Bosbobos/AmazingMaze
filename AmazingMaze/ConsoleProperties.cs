@@ -20,7 +20,7 @@ public static class ConsoleProperties
 
     private static readonly IntPtr ConsoleOutputHandle = GetStdHandle(StandardOutputHandle);
 
-    public static void ApplyWorldRenderProperties(int worldSize)
+    public static void ApplyWindowSizeProperties(int worldSize)
     {
         var neededWidth = worldSize * 2 + 2;
         var neededHeight = worldSize + 5;
@@ -36,6 +36,10 @@ public static class ConsoleProperties
 
         Console.SetWindowSize(neededWidth, // магическое число 2 - ширина одного спрайта в символах
                               neededHeight); // магическое число 5 - дополнительные строчки помимо игрового поля т.к. надо также вместить очки на экран
+    }
+
+    public static void ApplyWorldRenderProperties()
+    {
         Console.CursorVisible = false; // убираем курсор
         Console.SetCursorPosition(0, 0); // устанавливаем позицию, чтобы переписывать с самого начала
     }
