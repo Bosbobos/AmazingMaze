@@ -5,11 +5,12 @@ using System.Linq;
 #region Инициализация мира
 
 
-int points = 0; // переменная, в которой лежат очки персонажа
-
 WorldObjects[,] world = MapHolder.GetMap();
 
 int worldSize = world.GetLength(0); // получаем размерность многомерного массива по первому измерению
+
+int points = 0; // переменная, в которой лежат очки персонажа
+int totalPoints = getTotalObjectsCount(WorldObjects.Crystall);
 
 
 #endregion Инициализация мира
@@ -121,7 +122,7 @@ Coordinates getDestinationPos(ConsoleKey key, Coordinates basePos)
 }
 
 
-void move(WorldObjects mover ,Coordinates basePos, Coordinates destinationPos)
+void move(WorldObjects mover, Coordinates basePos, Coordinates destinationPos)
 {
     world[destinationPos.x, destinationPos.y] = mover; // На месте назначения появляется персонаж
     world[basePos.x, basePos.y] = WorldObjects.EmptySpace; // На месте назначения появляется пустота
@@ -164,6 +165,18 @@ bool consoleKeyValidate(ConsoleKey key)
 }
 
 
+int getTotalObjectsCount(WorldObjects obj)
+{
+    int totalPoints = 0;
+    foreach (var i in world)
+    {
+        if (i == obj)
+            totalPoints++;
+    }
+    return totalPoints;
+}
+
+
 #endregion Функция логики игры
 
 
@@ -173,11 +186,16 @@ bool consoleKeyValidate(ConsoleKey key)
 ConsoleProperties.ApplyWindowSizeProperties(worldSize);
 renderView();
 
-while(true)
+while(points < totalPoints)
 {
     var key = Console.ReadKey();
     gameLogic(key.Key);
     renderView();
 }
+
+Console.Clear();
+Console.WriteLine($"Вы собрали {points} очков и победили!");
+Console.Read();
+
 
 #endregion Стартуем
