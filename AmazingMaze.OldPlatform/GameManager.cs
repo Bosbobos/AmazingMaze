@@ -14,6 +14,7 @@ namespace AmazingMaze.OldPlatform
 
         int points = 0; // переменная, в которой лежат очки персонажа
         int totalPoints { get; set; }
+        bool GameWon { get; set; }
 
 
         public GameManager()
@@ -28,7 +29,7 @@ namespace AmazingMaze.OldPlatform
             ConsoleProperties.ApplyWindowSizeProperties(worldSize);
             renderView();
 
-            while (points < totalPoints)
+            while (!GameWon)
             {
                 var key = Console.ReadKey();
                 gameLogic(key.Key);
@@ -65,6 +66,11 @@ namespace AmazingMaze.OldPlatform
             Console.BackgroundColor = ConsoleColor.Cyan;
             Console.Write(worldObjectToString(WorldObjects.Character));
 
+            var exitPos = getPosOf(WorldObjects.Exit);
+            Console.SetCursorPosition(exitPos.y * 2, exitPos.x + 2);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write(worldObjectToString(WorldObjects.Exit));
+
             Console.BackgroundColor = ConsoleColor.Black;
         }
 
@@ -98,6 +104,8 @@ namespace AmazingMaze.OldPlatform
                     return "@@";
                 case WorldObjects.Crystall:
                     return "00";
+                case WorldObjects.Exit:
+                    return "EE";
                 default:
                     throw new NotImplementedException("Add new case to the switch");
             }
@@ -174,6 +182,9 @@ namespace AmazingMaze.OldPlatform
                 case WorldObjects.Crystall:
                     move(WorldObjects.Character, characterPos, destinationPos);
                     points++;
+                    break;
+                case WorldObjects.Exit:
+                    GameWon = true;
                     break;
                 default:
                     throw new NotImplementedException("Допишите switch!");

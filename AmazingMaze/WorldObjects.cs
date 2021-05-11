@@ -3,5 +3,6 @@
     Wall,
     EmptySpace,
     Character,
-    Crystall
+    Crystall,
+    Exit
 }
