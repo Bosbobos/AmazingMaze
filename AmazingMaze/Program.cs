@@ -11,6 +11,7 @@ int worldSize = world.GetLength(0); // получаем размерность �
 
 int points = 0; // переменная, в которой лежат очки персонажа
 int totalPoints = getTotalObjectsCount(WorldObjects.Crystall);
+bool gameWon = false;
 
 
 #endregion Инициализация мира
@@ -29,16 +30,22 @@ void renderView()
     string worldView = worldToString(world);
     Console.WriteLine(worldView);
 
-    recolorCharacter();
+    recolor();
 }
 
 
-void recolorCharacter()
+void recolor()
 {
     var characterPos = getPosOf(WorldObjects.Character);
     Console.SetCursorPosition(characterPos.y * 2, characterPos.x + 2);
     Console.BackgroundColor = ConsoleColor.Cyan;
     Console.Write(worldObjectToString(WorldObjects.Character));
+
+    var exitPos = getPosOf(WorldObjects.Exit);
+    Console.SetCursorPosition(exitPos.y * 2, exitPos.x + 2);
+    Console.BackgroundColor = ConsoleColor.Red;
+    Console.Write(worldObjectToString(WorldObjects.Exit));
+
 
     Console.BackgroundColor = ConsoleColor.Black;
 }
@@ -70,9 +77,11 @@ string worldObjectToString(WorldObjects worldObjects)
         case WorldObjects.EmptySpace:
             return "  ";
         case WorldObjects.Character:
-            return "@@";
+            return "  ";
         case WorldObjects.Crystall:
-            return "00";
+            return "@@";
+        case WorldObjects.Exit:
+            return "  ";
         default:
             throw new NotImplementedException("Add new case to the switch");
     }
@@ -150,6 +159,9 @@ void gameLogic(ConsoleKey key)
             move(WorldObjects.Character, characterPos, destinationPos);
             points++;
             break;
+        case WorldObjects.Exit:
+            gameWon = true;
+            break;
         default:
             throw new NotImplementedException("Допишите switch!");
     }           
@@ -180,13 +192,13 @@ int getTotalObjectsCount(WorldObjects obj)
 #endregion Функция логики игры
 
 
-#region Стартуем
+#region Игровой процесс
 
 
 ConsoleProperties.ApplyWindowSizeProperties(worldSize);
 renderView();
 
-while(points < totalPoints)
+while(!gameWon)
 {
     var key = Console.ReadKey();
     gameLogic(key.Key);
@@ -194,8 +206,8 @@ while(points < totalPoints)
 }
 
 Console.Clear();
-Console.WriteLine($"Вы собрали {points} очков и победили!");
+Console.WriteLine($"Вы победили, собрав {points} очков!");
 Console.Read();
 
 
-#endregion Стартуем
+#endregion Игровой процесс
